@@ -1,10 +1,12 @@
 def define_posicoes(linha, coluna, orientacao, tamanho):
     posicoes = []
-    for i in range(tamanho):
-        if orientacao == "vertical":
-            posicoes.append([linha + i, coluna])
-        else:
+
+    if orientacao == "vertical":
+        posicoes.append([linha + i, coluna])
+    elif orientacao == "horizontal":
+        for i in range(tamanho):
             posicoes.append([linha, coluna + i])
+    
     return posicoes
 
 def preenche_frota(frota, nome_navio,linha, coluna, orientacao, tamanho):
