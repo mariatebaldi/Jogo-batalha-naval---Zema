@@ -42,3 +42,25 @@ def posiciona_frota(frota):
 
 
     return tabuleiro
+
+
+def afundados(frota,tabuleiro): #para um navio ser afundado ele deve ter todos os seu componentes escolhidos
+
+    navios_afundados =  0  #quantidade de navios afundados no inicio          
+
+    for nome_navio in frota:
+        for posicoes_navio in frota[nome_navio]:  #armazeno e verifico se os elementos do navio possuem x para saber se foram afundados
+            navio_afundado = True
+
+            for posicao in posicoes_navio:
+                linha = posicao[0]
+                coluna = posicao[1]
+
+                if tabuleiro[linha][coluna] != "X":
+                    navio_afundado = False
+
+            if navio_afundado:
+                navios_afundados = navios_afundados + 1
+
+    
+    return navios_afundados
