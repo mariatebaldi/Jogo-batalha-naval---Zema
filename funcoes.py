@@ -35,10 +35,11 @@ def posiciona_frota(frota):
     tabuleiro = [[0]*10 for _ in range(10)]
 
     for nome_navio in frota:
-        for posicao in frota[nome_navio]:
-            linha = posicao[0]
-            coluna = posicao[1]
-            tabuleiro[linha][coluna] = 1
+        for navio in frota[nome_navio]:
+            for posicao in navio:
+                linha = posicao[0]
+                coluna = posicao[1]
+                tabuleiro[linha][coluna] = 1
 
 
     return tabuleiro
@@ -90,3 +91,45 @@ def posicao_valida(frota, linha, coluna, orientacao, tamanho):
 
     return True  
 
+
+def solicita_posicionamento():
+    frota = {}
+
+    embarcacoes = [
+        ("porta-aviões", 1, 4),
+        ("navio-tanque", 2, 3),
+        ("contratorpedeiro", 3, 2),
+        ("submarino", 4, 1)
+    ]
+
+    for nome_navio, quantidade, tamanho in embarcacoes:
+        for _ in range(quantidade):
+            posicionado = False
+
+            while not posicionado:
+                print(
+                    f"Insira as informações referentes ao navio {nome_navio} "
+                    f"que possui tamanho {tamanho}"
+                )
+
+                linha = int(input("Linha: "))
+                coluna = int(input("Coluna: "))
+                orientacao = ""
+
+                if nome_navio == "submarino":
+                    orientacao = "vertical"
+                else:
+                    opcao = int(input("Orientação: [1] Vertical [2] Horizontal "))
+
+                    if opcao == 1:
+                        orientacao = "vertical"
+                    elif opcao == 2:
+                        orientacao = "horizontal"
+
+                if orientacao != "" and posicao_valida(frota, linha, coluna, orientacao, tamanho):
+                    preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho)
+                    posicionado = True
+                else:
+                    print("Esta posição não está válida!")
+
+    return frota
